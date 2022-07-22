@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: 'Tracker Project'
+  liquibase:
+    change-log: db/root.xml
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5440/project
+    username: project
+    password: project
+server:
+  servlet:
+    context-path: /api/v01
+  port: 8080
