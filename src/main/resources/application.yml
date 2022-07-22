@@ -10,5 +10,5 @@ spring:
     password: project
 server:
   servlet:
-    context-path: /api/v01
+    context-path: /api
   port: 8080
