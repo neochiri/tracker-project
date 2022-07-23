@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 public class ProjectMapper implements IMapper<ProjectModel, ProjectDAO>{
 
 	@Override
-	public ProjectModel dtoToModel(final ProjectDAO projectDAO) {
+	public ProjectModel daoToModel(final ProjectDAO projectDAO) {
 		return new ProjectModel();
 	}
 
 	@Override
-	public ProjectDAO modelToDto(final ProjectModel projectModel) {
+	public ProjectDAO modelToDAO(final ProjectModel projectModel) {
 		return new ProjectDAO();
 	}
 }
