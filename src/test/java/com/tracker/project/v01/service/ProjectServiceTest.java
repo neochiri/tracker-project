@@ -4,6 +4,7 @@ import com.tracker.project.v01.dao.ProjectDAO;
 import com.tracker.project.v01.mapper.ProjectMapper;
 import com.tracker.project.v01.model.ProjectModel;
 import com.tracker.project.v01.repository.IProjectRepository;
+import com.tracker.project.v01.utils.ProjectObjects;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,8 +32,8 @@ public class ProjectServiceTest {
 
 	@Test
 	public void testFindProjectFound() {
-		when(projectRepository.findByName(anyString())).thenReturn(new ProjectDAO());
-		when(projectMapper.daoToModel(any(ProjectDAO.class))).thenReturn(new ProjectModel());
+		when(projectRepository.findByName(anyString())).thenReturn(ProjectObjects.getProjectDAO());
+		when(projectMapper.daoToModel(any(ProjectDAO.class))).thenReturn(ProjectObjects.getProjectModel());
 		ProjectModel project = projectService.find(PROJECT_NAME);
 
 		assertNotNull("Project must not be null", project);

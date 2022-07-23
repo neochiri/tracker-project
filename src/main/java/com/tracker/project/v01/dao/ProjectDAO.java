@@ -1,11 +1,7 @@
 package com.tracker.project.v01.dao;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import javax.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 import java.sql.Timestamp;
 
@@ -13,7 +9,6 @@ import java.sql.Timestamp;
 @Entity(name = "project")
 public class ProjectDAO {
 
-	@jakarta.persistence.Id
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
