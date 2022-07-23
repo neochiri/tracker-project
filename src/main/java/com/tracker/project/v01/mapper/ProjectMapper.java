@@ -9,11 +9,11 @@ public class ProjectMapper implements IMapper<ProjectModel, ProjectDAO>{
 
 	@Override
 	public ProjectModel dtoToModel(final ProjectDAO projectDAO) {
-		return null;
+		return new ProjectModel();
 	}
 
 	@Override
 	public ProjectDAO modelToDto(final ProjectModel projectModel) {
-		return null;
+		return new ProjectDAO();
 	}
 }
