@@ -1,5 +1,6 @@
 package com.tracker.project.v01.service;
 
+import com.tlc.tracker.exception.BusinessServiceException;
 import com.tracker.project.v01.dao.ProjectDAO;
 import com.tracker.project.v01.mapper.ProjectMapper;
 import com.tracker.project.v01.model.ProjectModel;
@@ -10,13 +11,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.tracker.project.v01.utils.ProjectConstants.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.util.AssertionErrors.*;
 
-@SpringBootTest
 @ExtendWith({MockitoExtension.class})
 public class ProjectServiceTest {
 
@@ -37,5 +37,14 @@ public class ProjectServiceTest {
 		ProjectModel project = projectService.find(PROJECT_NAME);
 
 		assertNotNull("Project must not be null", project);
+	}
+
+	@Test
+	public void testFindProjectNotExisting() {
+		when(projectRepository.findByName(anyString())).thenReturn(null);
+
+		BusinessServiceException exception = assertThrows(BusinessServiceException.class, () -> {projectService.find(PROJECT_NAME);});
+
+		assertEquals("Project could not be found", exception.getMessage());
 	}
 }

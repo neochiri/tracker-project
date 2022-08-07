@@ -1,5 +1,7 @@
 package com.tracker.project.v01.service;
 
+import com.tlc.tracker.exception.BusinessServiceException;
+import com.tlc.tracker.exception.ErrorType;
 import com.tracker.project.v01.dao.ProjectDAO;
 import com.tracker.project.v01.mapper.ProjectMapper;
 import com.tracker.project.v01.model.ProjectModel;
@@ -22,6 +24,9 @@ public class ProjectService implements IProjectService {
 	@Override
 	public ProjectModel find(final String name) {
 		final ProjectDAO projectFound = projectRepository.findByName(name);
+		if (projectFound == null) {
+			throw new BusinessServiceException("Project could not be found", ErrorType.BUSINESS_ERROR);
+		}
 		final ProjectModel project = projectMapper.daoToModel(projectFound);
 		return project;
 	}
