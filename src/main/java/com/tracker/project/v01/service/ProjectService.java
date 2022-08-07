@@ -9,6 +9,7 @@ import com.tracker.project.v01.repository.IProjectRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectService implements IProjectService {
@@ -33,7 +34,9 @@ public class ProjectService implements IProjectService {
 
 	@Override
 	public List<ProjectModel> findAll() {
-		return List.of(new ProjectModel());
+		final List<ProjectDAO> projectsFound = projectRepository.findAll();
+		final List<ProjectModel> projects = projectsFound.stream().map(project -> projectMapper.daoToModel(project)).collect(Collectors.toList());
+		return projects;
 	}
 
 	@Override

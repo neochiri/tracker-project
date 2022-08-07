@@ -12,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
 import static com.tracker.project.v01.utils.ProjectConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -34,7 +36,7 @@ public class ProjectServiceTest {
 	public void testFindProjectFound() {
 		when(projectRepository.findByName(anyString())).thenReturn(ProjectObjects.getProjectDAO());
 		when(projectMapper.daoToModel(any(ProjectDAO.class))).thenReturn(ProjectObjects.getProjectModel());
-		ProjectModel project = projectService.find(PROJECT_NAME);
+		final ProjectModel project = projectService.find(PROJECT_NAME);
 
 		assertNotNull("Project must not be null", project);
 	}
@@ -43,8 +45,18 @@ public class ProjectServiceTest {
 	public void testFindProjectNotExisting() {
 		when(projectRepository.findByName(anyString())).thenReturn(null);
 
-		BusinessServiceException exception = assertThrows(BusinessServiceException.class, () -> {projectService.find(PROJECT_NAME);});
+		final BusinessServiceException exception = assertThrows(BusinessServiceException.class, () -> {projectService.find(PROJECT_NAME);});
 
 		assertEquals("Project could not be found", exception.getMessage());
+	}
+
+	@Test
+	public void testFindAllProjects() {
+		when(projectRepository.findAll()).thenReturn(List.of(new ProjectDAO()));
+		when(projectMapper.daoToModel(any(ProjectDAO.class))).thenReturn(new ProjectModel());
+
+		final List<ProjectModel> projects = projectService.findAll();
+
+		assertFalse(projects.isEmpty());
 	}
 }
