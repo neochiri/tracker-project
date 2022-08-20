@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 
 @Data
 public class ProjectModel {
-	private Integer id;
+	private String id;
 	@NotNull
 	@Size(min = 5, max = 30)
 	private String name;

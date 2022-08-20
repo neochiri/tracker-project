@@ -40,8 +40,11 @@ public class ProjectService implements IProjectService {
 	}
 
 	@Override
-	public ProjectModel create(final ProjectModel projectModel) {
-		return new ProjectModel();
+	public ProjectModel create(final ProjectModel model) {
+		final ProjectDAO projectToCreate = projectMapper.modelToDAO(model);
+		final ProjectDAO projectCreated = projectRepository.save(projectToCreate);
+		final ProjectModel project = projectMapper.daoToModel(projectCreated);
+		return project;
 	}
 
 	@Override

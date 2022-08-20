@@ -59,4 +59,16 @@ public class ProjectServiceTest {
 
 		assertFalse(projects.isEmpty());
 	}
+
+	@Test
+	public void testCreateProjectSuccess() {
+		when(projectMapper.modelToDAO(any(ProjectModel.class))).thenReturn(ProjectObjects.getProjectDAO());
+		when(projectRepository.save(any(ProjectDAO.class))).thenReturn(ProjectObjects.getProjectDAO());
+		when(projectMapper.daoToModel(any(ProjectDAO.class))).thenReturn(ProjectObjects.getProjectModel());
+
+		final ProjectModel project = projectService.create(ProjectObjects.getProjectModel());
+
+		assertNotNull(project);
+		assertEquals("d846b110-2088-11ed-861d-0242ac120002", project.getId());
+	}
 }
