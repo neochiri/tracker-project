@@ -9,6 +9,7 @@ import com.tracker.project.v01.repository.IProjectRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,6 +42,10 @@ public class ProjectService implements IProjectService {
 
 	@Override
 	public ProjectModel create(final ProjectModel model) {
+		final ProjectDAO projectFound = projectRepository.findByName(model.getName());
+		if (Objects.nonNull(projectFound)) {
+			throw new BusinessServiceException(String.format("The project %s already exists", model.getName()), ErrorType.BUSINESS_ERROR);
+		}
 		final ProjectDAO projectToCreate = projectMapper.modelToDAO(model);
 		final ProjectDAO projectCreated = projectRepository.save(projectToCreate);
 		final ProjectModel project = projectMapper.daoToModel(projectCreated);

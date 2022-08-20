@@ -71,4 +71,14 @@ public class ProjectServiceTest {
 		assertNotNull(project);
 		assertEquals("d846b110-2088-11ed-861d-0242ac120002", project.getId());
 	}
+
+	@Test
+	public void testCreateProjectAlreadyExists() {
+		when(projectRepository.findByName(anyString())).thenReturn(new ProjectDAO());
+
+		final BusinessServiceException exception = assertThrows(BusinessServiceException.class, () -> projectService.create(ProjectObjects.getProjectModel()));
+
+		assertNotNull(exception);
+		assertEquals(String.format("The project %s already exists", PROJECT_NAME), exception.getMessage());
+	}
 }
